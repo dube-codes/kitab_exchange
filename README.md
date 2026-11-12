@@ -1,38 +1,6 @@
 # Kitab Exchange API
 
-Kitab Exchange is a FastAPI REST API for a college textbook exchange. It supports user registration and book listings, including searching available books and marking a listing as sold.
-
-## Features
-
-- Register users with a name, email, college, and optional phone number.
-- Reject a registration when the email is already in use.
-- Create book listings linked to users.
-- List unsold books and filter by title and/or author.
-- Update book fields and mark books as sold.
-- Protect write endpoints with an API key.
-- Create SQLite tables from the SQLModel metadata at application startup.
-
-## Tech Stack
-
-- Python, FastAPI, and Uvicorn
-- SQLModel and SQLite
-
-## Project Structure
-
-````text
-.
-|-- auth.py             # API-key validation
-|-- database.py         # SQLite engine, sessions, and table creation
-|-- main.py             # FastAPI app and router registration
-|-- models/
-|   |-- book.py         # Book table and request/response models
-|   `-- user.py         # User table and request/response models
-|-- routes/
-|   |-- books.py        # Book endpoints
-|   `-- users.py        # User endpoints
-# Kitab Exchange API
-
-Kitab Exchange is a personal learning project: a FastAPI REST API for a college textbook exchange. It supports user registration and book listings, including searching available books and marking listings as sold.
+Kitab Exchange is a personal learning project: a FastAPI REST API for a college textbook exchange. It supports user registration and book listings, including searching available books and marking a listing as sold.
 
 ## Features
 
@@ -65,7 +33,7 @@ Kitab Exchange is a personal learning project: a FastAPI REST API for a college 
 |   `-- users.py        # User endpoints
 |-- requirements.txt    # Python dependencies
 `-- README.md
-````
+```
 
 ## Database Setup and Migrations
 
