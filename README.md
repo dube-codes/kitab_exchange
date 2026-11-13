@@ -1,10 +1,10 @@
 # Kitab Exchange API
 
-I built this as a personal learning project to practice FastAPI, SQLModel, and SQLite. The app lets me register users and create, list, update, and sell book listings for a college textbook exchange.
+I built this as a personal learning project to practice FastAPI, SQLModel, and SQLite. The app lets me register users and manage book listings for a college textbook exchange.
 
 ## Project overview
 
-This project is a small REST API for managing users and books. I used FastAPI to define the routes and SQLModel to model the database tables.
+This is a small REST API for a college textbook exchange. I used FastAPI for the endpoints and SQLModel for the database models.
 
 ## Features
 
@@ -47,29 +47,52 @@ This project is a small REST API for managing users and books. I used FastAPI to
 
 ## Database setup and migrations
 
-The database URL is `sqlite:///./kitab_exchange.db` in `database.py`. The app creates the tables at startup by calling `SQLModel.metadata.create_all(engine)` inside `create_tables()`.
+The database URL is `sqlite:///./kitab_exchange.db` in `database.py`. On startup, `create_tables()` calls `SQLModel.metadata.create_all(engine)` to create the tables.
 
-There are no migration files and no migration tool in this project. The `Book.user_id` field is linked to `User.id`, and the relationship is defined in the SQLModel models.
+There are no migration files or a migration tool in this project. The `Book.user_id` field is linked to `User.id`.
 
 ## Installation and setup
 
-From the project directory, create a virtual environment and install the dependencies.
+Start by cloning the project and moving into the repo.
 
-Windows (PowerShell):
+```bash
+git clone https://github.com/example/kitab_exchange.git
+cd kitab_exchange
+```
+
+Create a virtual environment, activate it, and install the dependencies.
+
+Windows PowerShell:
 
 ```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+Windows Command Prompt:
+
+```cmd
+python -m venv venv
+venv\Scripts\activate.bat
 python -m pip install -r requirements.txt
 ```
 
 macOS and Linux:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 python -m pip install -r requirements.txt
 ```
+
+If scripts are blocked on PowerShell, run:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+```
+
+After that, confirm the app works by opening `/docs` in a browser once the server is running.
 
 ## Environment variables
 
@@ -87,15 +110,15 @@ The app runs on `http://127.0.0.1:8000` by default.
 
 The code uses a path parameter named `ver` in the URL, so a request can use a value such as `v1`.
 
-| Method | Path | Description | Authentication |
-| --- | --- | --- | --- |
-| `GET` | `/` | Return the welcome message. | None |
-| `POST` | `/api/{ver}/user/` | Create a user. | `X-API-Key` required |
-| `GET` | `/api/{ver}/user/` | List users. | None |
-| `GET` | `/api/{ver}/book/` | List unsold books. Optional query params: `title`, `author`. | None |
-| `POST` | `/api/{ver}/book/` | Create a book listing. | `X-API-Key` required |
-| `PATCH` | `/api/{ver}/book/{book_id}` | Update a book listing. | `X-API-Key` required |
-| `PATCH` | `/api/{ver}/book/sold/{book_id}` | Mark a book as sold. | `X-API-Key` required |
+| Method  | Path                             | Description                                                  | Authentication       |
+| ------- | -------------------------------- | ------------------------------------------------------------ | -------------------- |
+| `GET`   | `/`                              | Return the welcome message.                                  | None                 |
+| `POST`  | `/api/{ver}/user/`               | Create a user.                                               | `X-API-Key` required |
+| `GET`   | `/api/{ver}/user/`               | List users.                                                  | None                 |
+| `GET`   | `/api/{ver}/book/`               | List unsold books. Optional query params: `title`, `author`. | None                 |
+| `POST`  | `/api/{ver}/book/`               | Create a book listing.                                       | `X-API-Key` required |
+| `PATCH` | `/api/{ver}/book/{book_id}`      | Update a book listing.                                       | `X-API-Key` required |
+| `PATCH` | `/api/{ver}/book/sold/{book_id}` | Mark a book as sold.                                         | `X-API-Key` required |
 
 The code returns `400` when an email is already registered, `401` for an invalid API key, `404` when a book is not found, and `422` for request validation errors.
 
